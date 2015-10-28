@@ -11,9 +11,9 @@ public class TelaPolinomiAr extends javax.swing.JFrame {
     private void initComponents() {
 
         btnValidar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPaneEntrada = new javax.swing.JScrollPane();
         txtEntrada = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPaneSaida = new javax.swing.JScrollPane();
         txtSaida = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -25,33 +25,25 @@ public class TelaPolinomiAr extends javax.swing.JFrame {
             }
         });
 
-        txtEntrada.setColumns(20);
-        txtEntrada.setRows(5);
-        txtEntrada.setText("x^2+2\n 2x+1\n 3x^3\n 10+2x^2+3x^10\n 2-2+10x+x150^2+x(42)x+xx^2x^3\n");
-        
-	//Validador.validar("10+2x^2+3x^10");
-	//Validador.validar("2-2+10x+x150^2+x(42)x+xx^2x^3");
-	
+        txtEntrada.setText("x^2 + 2 \n2x + 1 \n3x^3 \n10+2x^2+3x^10 \n2-2+10x+x150^2+x(42)x+xx^2x^3\n");
+        	
         txtEntrada.setToolTipText("Podem ser informados vários polinômios para validar. Quebrar uma linha para cada polinômio diferente.");
-        txtEntrada.setName("Entrada"); // NOI18N
-        jScrollPane1.setViewportView(txtEntrada);
+        jScrollPaneEntrada.setViewportView(txtEntrada);
         txtEntrada.getAccessibleContext().setAccessibleDescription("Podem ser informados vários polinômios para validar. Quebrar uma linha para cada polinômio diferente. Ex:\\n\nx^2+2\\n\n2x+1\\n\n3x^3\\n");
 
+        txtSaida.setText("Pressione \"Validar\" para validar os polinômios");
         txtSaida.setEditable(false);
-        txtSaida.setColumns(20);
-        txtSaida.setRows(5);
-        txtSaida.setName("Saida"); // NOI18N
         txtSaida.setRequestFocusEnabled(false);
-        jScrollPane2.setViewportView(txtSaida);
+        jScrollPaneSaida.setViewportView(txtSaida);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+                .addComponent(jScrollPaneEntrada, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPaneSaida, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnValidar)
@@ -61,8 +53,8 @@ public class TelaPolinomiAr extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
+                   .addComponent(jScrollPaneSaida, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                   .addComponent(jScrollPaneEntrada, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnValidar)
                 .addGap(5, 5, 5))
@@ -114,8 +106,8 @@ public class TelaPolinomiAr extends javax.swing.JFrame {
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton btnValidar;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPaneEntrada;
+    private javax.swing.JScrollPane jScrollPaneSaida;
     private javax.swing.JTextArea txtEntrada;
     private javax.swing.JTextArea txtSaida;
     // End of variables declaration                   
