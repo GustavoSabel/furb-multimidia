@@ -1,6 +1,7 @@
 package Polinomio;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Expressao implements Base {
 	private int sinal;
@@ -41,10 +42,10 @@ public class Expressao implements Base {
 		this.sinal = sinal;
 	}
 
-	public double calcular() {
+	public double calcular(HashMap<Character, Integer> variaveis) {
 		double result = 0;
 		for (Termo termo : termos) {
-			result += termo.calcular() * this.getSinal();
+			result += termo.calcular(variaveis) * this.getSinal();
 		}
 		return result;
 	}
@@ -55,5 +56,21 @@ public class Expressao implements Base {
 
 	public void setOrigem(Base origem) {
 		this.origem = origem;
+	}
+	
+	@Override
+	public String toString(boolean traduzido, HashMap<Character, Integer> variaveis) {
+		String result = "";
+		for (Termo termo : termos) {
+			result += this.getSinalString() + termo.toString(traduzido, variaveis);
+		}
+		return result;
+	}
+
+	private String getSinalString() {
+		if(sinal == 1)
+			return "+";
+		else
+			return "-";
 	}
 }

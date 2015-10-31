@@ -11,8 +11,8 @@ import Polinomio.Validador;
 public class Testes {
 	public static void main(String[] args) {
 		try {
-			//TesteValidar();
-			//TesteCalcular();
+			TesteValidar();
+			TesteCalcular();
 			TesteCalcularSemantico();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -72,23 +72,25 @@ public class Testes {
 			
 			double result = 0;
 			
-			Polinomio.Variaveis.put('X', 1);
-			result = pol.calcular();
+			HashMap<Character, Integer> mapa = new HashMap<>();
+			
+			mapa.put('X', 1);
+			result = pol.calcular(mapa);
 			if(result != 0)
 				throw new Exception("Teste 1 falhou. Esperava '0', recebeu '"+ result +"'");
 			
-			Polinomio.Variaveis.put('X', -5);
-			result = pol.calcular();
+			mapa.put('X', -5);
+			result = pol.calcular(mapa);
 			if(result != 48)
 				throw new Exception("Teste 2 falhou. Esperava '48', recebeu '"+ result +"'");
 			
-			Polinomio.Variaveis.put('X', 100);
-			result = pol.calcular();
+			mapa.put('X', 100);
+			result = pol.calcular(mapa);
 			if(result != 19998)
 				throw new Exception("Teste 3 falhou. Esperava '19998', recebeu '"+ result +"'");
 			
-			Polinomio.Variaveis.put('X', 0);
-			result = pol.calcular();
+			mapa.put('X', 0);
+			result = pol.calcular(mapa);
 			if(result != -2)
 				throw new Exception("Teste 4 falhou. Esperava '-2', recebeu '"+ result +"'");
 			
@@ -101,28 +103,29 @@ public class Testes {
 	
 	public static void TesteCalcularSemantico() throws Exception {
 		try {
-			String pol = "2x^2-2";
 			HashMap<Character, Integer> mapa = new HashMap<>();
+
+			Polinomio pol = Validador.montarPolinomio("2x^2-2");
 			
 			double result = 0;
 			
 			mapa.put('X', 1);
-			result = Validador.calcular(pol, mapa);
+			result = pol.calcular(mapa);
 			if(result != 0)
 				throw new Exception("Teste 1 falhou. Esperava '0', recebeu '"+ result +"'");
 			
 			mapa.put('X', -5);
-			result = Validador.calcular(pol, mapa);
+			result = pol.calcular(mapa);
 			if(result != 48)
 				throw new Exception("Teste 2 falhou. Esperava '48', recebeu '"+ result +"'");
 			
 			mapa.put('X', 100);
-			result = Validador.calcular(pol, mapa);
+			result = pol.calcular(mapa);
 			if(result != 19998)
 				throw new Exception("Teste 3 falhou. Esperava '19998', recebeu '"+ result +"'");
 			
 			mapa.put('X', 0);
-			result = Validador.calcular(pol, mapa);
+			result = pol.calcular(mapa);
 			if(result != -2)
 				throw new Exception("Teste 4 falhou. Esperava '-2', recebeu '"+ result +"'");
 			

@@ -41,7 +41,7 @@ public class Validador {
 		return false;
 	}
 
-	public static double calcular(String polinomio, HashMap<Character, Integer> variaveis) {
+	public static Polinomio montarPolinomio(String polinomio) {
 		try {
 			polinomio = polinomio.replaceAll("\\s+", "");
 
@@ -53,10 +53,7 @@ public class Validador {
 
 			System.out.println(polinomio + " é válido!");
 
-			Polinomio.Variaveis = variaveis;
-
-			Polinomio pol = semantico.getPolinomio();
-			return pol.calcular();
+			return semantico.getPolinomio();
 
 		} catch (LexicalError e) {
 			e.printStackTrace();
@@ -65,16 +62,6 @@ public class Validador {
 		} catch (SemanticError e) {
 			e.printStackTrace();
 		}
-		return Integer.MIN_VALUE;
+		return null;
 	}
-	
-	public static double calcular(String polinomio) {
-		int contador = 0;
-		for (Map.Entry<Character, Integer> entry : Polinomio.Variaveis.entrySet()) {
-			entry.setValue(PRIMOS[contador++]);
-		}
-		
-		return Validador.calcular(polinomio, Polinomio.Variaveis);
-	}
-
 }

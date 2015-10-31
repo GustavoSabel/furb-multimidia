@@ -1,9 +1,7 @@
 package Polinomio;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.Hashtable;
 
 public class Polinomio implements Base {
 	/**
@@ -48,12 +46,22 @@ public class Polinomio implements Base {
 	 * Resolve o poln�mio com base nos valores da propriedade <b>variaveis</b>
 	 */
 	@Override
-	public double calcular() {
+	public double calcular(HashMap<Character, Integer> variaveis) {
+		System.out.print("Calcular: ");
+		System.out.println(this.toString(true, variaveis));
 		double result = 0;
 		for (Expressao expressao : expressoes) {
-			result += expressao.calcular();
+			result += expressao.calcular(variaveis);
 		}
 		return result;
 	}
 
+	@Override
+	public String toString(boolean traduzido, HashMap<Character, Integer> variaveis) {
+		String result = "";
+		for (Expressao expressao : expressoes) {
+			result += expressao.toString(true, variaveis);
+		}
+		return result;
+	}
 }

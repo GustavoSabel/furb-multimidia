@@ -1,6 +1,7 @@
 package Polinomio;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Termo implements Base {
 	private ArrayList<Elemento> elementos;
@@ -25,15 +26,15 @@ public class Termo implements Base {
 		return ultimoElemento;
 	}
 
-	public double calcular() {
+	public double calcular(HashMap<Character, Integer> variaveis) {
 		double result = 0;
 		boolean primeiro = true;
 		for (Elemento elemento : elementos) {
 			if (primeiro) {
 				primeiro = false;
-				result = elemento.calcular();
+				result = elemento.calcular(variaveis);
 			} else {
-				result *= elemento.calcular();
+				result *= elemento.calcular(variaveis);
 			}
 		}
 		return result;
@@ -45,6 +46,21 @@ public class Termo implements Base {
 
 	@Override
 	public void setOrigem(Base origem) {
-		this.origem = (Expressao)origem;
+		this.origem = (Expressao) origem;
+	}
+	
+	@Override
+	public String toString(boolean traduzido, HashMap<Character, Integer> variaveis) {
+		String result = "";
+		boolean primeiro = true;
+		for (Elemento elemento : elementos) {
+			if (primeiro) {
+				primeiro = false;
+				result += elemento.toString(traduzido, variaveis);
+			} else {
+				result += "*" + elemento.toString(traduzido, variaveis);
+			}
+		}
+		return result;
 	}
 }
