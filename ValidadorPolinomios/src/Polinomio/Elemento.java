@@ -1,6 +1,7 @@
 package Polinomio;
 
 public class Elemento {
+	public static final char NULL_VARIAVEL = 0;
 	/**
 	 * 1 para positivo
 	 * -1 para negativo
@@ -9,10 +10,42 @@ public class Elemento {
 	private double numero;
 	private char variavel;
 	private Expressao expressao;
+	private Elemento potencia;
 	
 	public Elemento() {
 		setSinal(1);
-		setVariavel(' ');
+		setNumero(Integer.MIN_VALUE);
+		setVariavel(NULL_VARIAVEL);
+	}
+	
+	public Elemento(int sinal, int numero, int potencia) {
+		setSinal(sinal);
+		this.potencia = new Elemento();
+		this.potencia.setNumero(potencia);
+		setNumero(numero);
+		setVariavel(NULL_VARIAVEL);
+	}
+	
+	public Elemento(int sinal, char variavel, int potencia) {
+		setSinal(sinal);
+		this.potencia = new Elemento();
+		this.potencia.setNumero(potencia);
+		setNumero(Integer.MIN_VALUE);
+		setVariavel(variavel);
+	}
+	
+	public Elemento getPotencia() {
+		return potencia;
+	}
+	
+	public double getPotenciaCalculada() {
+		if(potencia == null)
+			return 1;
+		return potencia.calcular();
+	}
+
+	public void setPotencia(Elemento potencia) {
+		this.potencia = potencia;
 	}
 	
 	public int getSinal() {
@@ -36,6 +69,7 @@ public class Elemento {
 	}
 
 	public void setVariavel(char variavel) {
+		Polinomio.Variaveis.put(Character.toUpperCase(variavel), Integer.MIN_VALUE);
 		this.variavel = variavel;
 	}
 
@@ -45,5 +79,22 @@ public class Elemento {
 
 	public void setExpressao(Expressao expressao) {
 		this.expressao = expressao;
+	}
+
+	public double calcular() {
+		double result = 0;
+		if(getExpressao() != null)
+		{
+			result = getExpressao().calcular();
+		}
+		else if(getVariavel() != Elemento.NULL_VARIAVEL){
+			result = Polinomio.Variaveis.get(getVariavel());
+		}
+		else{
+			result = getNumero();
+		}
+		result = result * getSinal();
+		result = Math.pow(result, getPotenciaCalculada());
+		return result;
 	}
 }

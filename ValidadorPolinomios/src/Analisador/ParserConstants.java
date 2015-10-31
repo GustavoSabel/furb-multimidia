@@ -1,4 +1,4 @@
-package Validador;
+package Analisador;
 
 public interface ParserConstants
 {
@@ -52,13 +52,13 @@ public interface ParserConstants
         "Era esperado \"^\"",
         "Era esperado \"(\"",
         "Era esperado \")\"",
-        "<expressao> inválido",
-        "<expressao2> inválido",
-        "<termo> inválido",
-        "<termo2> inválido",
-        "<potencia> inválido",
-        "<sinal> inválido",
-        "<elemento> inválido",
-        "<elemento2> inválido"
+        "<expressao> invï¿½lido",
+        "<expressao2> invï¿½lido",
+        "<termo> invï¿½lido",
+        "<termo2> invï¿½lido",
+        "<potencia> invï¿½lido",
+        "<sinal> invï¿½lido",
+        "<elemento> invï¿½lido",
+        "<elemento2> invï¿½lido"
     };
 }

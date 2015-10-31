@@ -1,4 +1,6 @@
-package Teste;
+package View;
+
+import Polinomio.Validador;
 
 public class TelaPolinomiAr extends javax.swing.JFrame {
 

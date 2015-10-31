@@ -1,4 +1,4 @@
-package Validador;
+package Analisador;
 
 public interface Constants extends ScannerConstants, ParserConstants
 {

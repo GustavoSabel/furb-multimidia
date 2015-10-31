@@ -1,4 +1,4 @@
-package Validador;
+package Analisador;
 
 public class Lexico implements Constants
 {

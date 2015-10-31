@@ -1,43 +1,46 @@
 package Polinomio;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
 public class Polinomio {
 	/**
-	 * Variáveis que estão no polinômio
-	 * É utilizado para calcular o polinômio
-	 * Antes de executar o cálculo, deve-se atribuir um 
-	 * valor para cada variável do dicionário
+	 * VariÃ¡veis que estÃ£o no polinÃ´mio
+	 * utilizado para calcular o polinÃ´mio
+	 * Antes de executar o calculo, deve-se atribuir um 
+	 * valor para cada variï¿½vel do dicionï¿½rio
 	 */
-	private Dictionary<Character, Integer> variaveis;
-	private Expressao expressao;
+	public static Dictionary<Character, Integer> Variaveis;
+	private ArrayList<Expressao> expressoes;
+	private Expressao ultimaExpressao;
 	
 	public Polinomio() {
-		expressao = new Expressao();
-		variaveis = new Hashtable<>();
+		expressoes = new ArrayList<Expressao>();
+		Polinomio.Variaveis = new Hashtable<>();
+	}
+
+	public void addExpressao(Expressao expressao) {
+		this.ultimaExpressao = expressao;
+		this.expressoes.add(expressao);
 	}
 	
-	public Dictionary<Character, Integer> getVariaveis() {
-		return variaveis;
+	public ArrayList<Expressao> getExpressoes() {
+		return expressoes;
 	}
 
-	public void setVariaveis(Dictionary<Character, Integer> variaveis) {
-		this.variaveis = variaveis;
+	public Expressao getUltimaExpressao() {
+		return ultimaExpressao;
 	}
 
-	public Expressao getExpressao() {
-		return expressao;
-	}
-
-	public void setExpressao(Expressao expressao) {
-		this.expressao = expressao;
-	}
-	
 	/**
-	 * Resolve o polnômio com base nos valores da propriedade <b>variaveis</b>
+	 * Resolve o polnï¿½mio com base nos valores da propriedade <b>variaveis</b>
 	 */
-	public void Calcular() {
-		//TODO: Implementar
+	public double Calcular() {
+		double result = 0;
+		for (Expressao expressao : expressoes) {			
+			result += expressao.calcular();
+		}
+		return result;
 	}
 }
