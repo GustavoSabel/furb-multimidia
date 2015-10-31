@@ -1,7 +1,15 @@
 package Polinomio;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import Analisador.LexicalError;
+import Analisador.Lexico;
+import Analisador.SemanticError;
+import Analisador.Semantico;
+import Analisador.Sintatico;
+import Analisador.SyntaticError;
 
 public class Polinomio implements Base {
 	/**
@@ -34,9 +42,9 @@ public class Polinomio implements Base {
 
 	@Override
 	public void setOrigem(Base origem) {
-		//Não deve ter origem
+		// Não deve ter origem
 	}
-	
+
 	@Override
 	public Base getOrigem() {
 		return null;
@@ -63,5 +71,27 @@ public class Polinomio implements Base {
 			result += expressao.toString(true, variaveis);
 		}
 		return result;
+	}
+
+	public static Polinomio criarPolinomio(String pol) {
+		try {
+			pol = pol.replaceAll("\\s+", "");
+
+			StringReader read = new StringReader(pol);
+			Lexico lex = new Lexico(read);
+			Sintatico sintatico = new Sintatico();
+			Semantico semantico = new Semantico();
+			sintatico.parse(lex, semantico);
+
+			return semantico.getPolinomio();
+
+		} catch (LexicalError e) {
+			e.printStackTrace();
+		} catch (SyntaticError e) {
+			e.printStackTrace();
+		} catch (SemanticError e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

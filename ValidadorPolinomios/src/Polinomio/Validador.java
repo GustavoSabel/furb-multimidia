@@ -1,8 +1,6 @@
 package Polinomio;
 
 import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Map;
 
 import Analisador.LexicalError;
 import Analisador.Lexico;
@@ -39,29 +37,5 @@ public class Validador {
 			e.printStackTrace();
 		}
 		return false;
-	}
-
-	public static Polinomio montarPolinomio(String polinomio) {
-		try {
-			polinomio = polinomio.replaceAll("\\s+", "");
-
-			StringReader read = new StringReader(polinomio);
-			Lexico lex = new Lexico(read);
-			Sintatico sintatico = new Sintatico();
-			Semantico semantico = new Semantico();
-			sintatico.parse(lex, semantico);
-
-			System.out.println(polinomio + " é válido!");
-
-			return semantico.getPolinomio();
-
-		} catch (LexicalError e) {
-			e.printStackTrace();
-		} catch (SyntaticError e) {
-			e.printStackTrace();
-		} catch (SemanticError e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 }
