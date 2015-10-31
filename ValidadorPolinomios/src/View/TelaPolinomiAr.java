@@ -27,7 +27,7 @@ public class TelaPolinomiAr extends javax.swing.JFrame {
             }
         });
 
-        txtEntrada.setText("x^2 + 2 \n2x + 1 \n3x^(3 \n10+2x^2+3x^10 \n2-2+10x+x150^2+x(42)x+xx^2x^3\n");
+        txtEntrada.setText("x^2 + 2 \n2x + 1 \n3x^(3 \n10+2x^2+3x^10 \n2-2+10x+x150^2+x(42)x+xx^2x^3 \n2^(-2^-5)^5+x^x^4 \nx^y^-y^w^+a");
         	
         txtEntrada.setToolTipText("Podem ser informados vários polinômios para validar. Quebrar uma linha para cada polinômio diferente.");
         jScrollPaneEntrada.setViewportView(txtEntrada);

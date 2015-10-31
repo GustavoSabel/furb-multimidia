@@ -5,39 +5,41 @@ public interface ParserConstants
     int START_SYMBOL = 10;
 
     int FIRST_NON_TERMINAL    = 10;
-    int FIRST_SEMANTIC_ACTION = 18;
+    int FIRST_SEMANTIC_ACTION = 19;
 
     int[][] PARSER_TABLE =
     {
         { -1,  0,  0,  0,  0, -1, -1,  0, -1 },
         {  3, -1, -1,  1,  2, -1, -1, -1,  3 },
         { -1,  4,  4,  4,  4, -1, -1,  4, -1 },
-        {  7,  6,  6,  6,  6,  5, -1,  6,  7 },
-        {  9,  9,  9,  9,  9,  9,  8,  9,  9 },
-        { -1, 12, 12, 10, 11, -1, -1, 12, -1 },
-        { -1, 13, 13, 13, 13, -1, -1, 13, -1 },
-        { -1, 14, 15, -1, -1, -1, -1, 16, -1 }
+        {  6,  5,  5,  6,  6,  5, -1,  5,  6 },
+        {  8,  8,  8,  8,  8,  8,  7,  8,  8 },
+        { -1, 11, 11,  9, 10, -1, -1, 11, -1 },
+        { -1, 12, 12, 12, 12, -1, -1, 12, -1 },
+        { -1, 13, 14, -1, -1, -1, -1, 15, -1 },
+        { -1, 17, 17, 17, 17, 16, -1, 17, -1 }
     };
 
     int[][] PRODUCTIONS = 
     {
-        { 12, 11 },
+        { 49, 12, 50, 11 },
         {  4, 10 },
         {  5, 10 },
         {  0 },
-        { 16, 13 },
-        {  6, 12 },
-        { 12 },
+        { 39, 16, 13, 40 },
+        { 18, 16, 13 },
         {  0 },
-        {  7, 17 },
+        {  7, 16 },
         {  0 },
-        {  4 },
-        {  5 },
+        {  4, 21 },
+        {  5, 21 },
         {  0 },
-        { 15, 19, 17, 14, 22 },
-        {  2, 20 },
-        {  3, 21 },
-        {  8, 10,  9 }
+        { 20, 15, 17, 14, 27 },
+        {  2, 22 },
+        {  3, 23 },
+        {  8, 10,  9 },
+        {  6 },
+        {  0 }
     };
 
     String[] PARSER_ERROR =
@@ -52,13 +54,14 @@ public interface ParserConstants
         "Era esperado \"^\"",
         "Era esperado \"(\"",
         "Era esperado \")\"",
-        "<expressao> invï¿½lido",
-        "<expressao2> invï¿½lido",
-        "<termo> invï¿½lido",
-        "<termo2> invï¿½lido",
-        "<potencia> invï¿½lido",
-        "<sinal> invï¿½lido",
-        "<elemento> invï¿½lido",
-        "<elemento2> invï¿½lido"
+        "<expressao> inválido",
+        "<expressao2> inválido",
+        "<termo> inválido",
+        "<termo2> inválido",
+        "<potencia> inválido",
+        "<sinal> inválido",
+        "<elemento> inválido",
+        "<elemento2> inválido",
+        "<multiplicacaoOpcional> inválido"
     };
 }

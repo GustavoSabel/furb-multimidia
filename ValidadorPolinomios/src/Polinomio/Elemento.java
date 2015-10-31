@@ -1,6 +1,6 @@
 package Polinomio;
 
-public class Elemento {
+public class Elemento implements Base {
 	public static final char NULL_VARIAVEL = 0;
 	/**
 	 * 1 para positivo
@@ -11,6 +11,7 @@ public class Elemento {
 	private char variavel;
 	private Expressao expressao;
 	private Elemento potencia;
+	private Base origem;
 	
 	public Elemento() {
 		setSinal(1);
@@ -45,6 +46,7 @@ public class Elemento {
 	}
 
 	public void setPotencia(Elemento potencia) {
+		potencia.setOrigem(this);
 		this.potencia = potencia;
 	}
 	
@@ -69,8 +71,8 @@ public class Elemento {
 	}
 
 	public void setVariavel(char variavel) {
-		Polinomio.Variaveis.put(Character.toUpperCase(variavel), Integer.MIN_VALUE);
-		this.variavel = variavel;
+		this.variavel = Character.toUpperCase(variavel);
+		Polinomio.Variaveis.put(this.variavel, Integer.MIN_VALUE);
 	}
 
 	public Expressao getExpressao() {
@@ -78,9 +80,10 @@ public class Elemento {
 	}
 
 	public void setExpressao(Expressao expressao) {
+		expressao.setOrigem(this);
 		this.expressao = expressao;
 	}
-
+		
 	public double calcular() {
 		double result = 0;
 		if(getExpressao() != null)
@@ -96,5 +99,13 @@ public class Elemento {
 		result = result * getSinal();
 		result = Math.pow(result, getPotenciaCalculada());
 		return result;
+	}
+
+	public Base getOrigem() {
+		return origem;
+	}
+
+	public void setOrigem(Base origem) {
+		this.origem = origem;
 	}
 }

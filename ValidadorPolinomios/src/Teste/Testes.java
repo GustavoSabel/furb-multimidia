@@ -1,5 +1,7 @@
 package Teste;
 
+import java.util.HashMap;
+
 import Polinomio.Elemento;
 import Polinomio.Expressao;
 import Polinomio.Polinomio;
@@ -9,8 +11,9 @@ import Polinomio.Validador;
 public class Testes {
 	public static void main(String[] args) {
 		try {
-			TesteValidar();
-			TesteCalcular();
+			//TesteValidar();
+			//TesteCalcular();
+			TesteCalcularSemantico();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -38,8 +41,16 @@ public class Testes {
 			if (!Validador.validar("2-2+10x+x150^2+x(42)x+xx^2x^3"))
 				throw new Exception("Teste 6 falhou");
 			
+			if (!Validador.validar("x^2 + (-2)"))
+				throw new Exception("Teste 7 falhou");
+			
+			if (!Validador.validar("x^+2 + (-2)"))
+				throw new Exception("Teste 8 falhou");
+			
+			System.out.println("Validação terminou com sucesso!");
+			
 		} catch (Exception ex) {
-			throw new Exception("Teste de validação falou. " + ex.getMessage());
+			throw new Exception("Teste de validação falhou. " + ex.getMessage());
 		}
 	}
 
@@ -62,27 +73,63 @@ public class Testes {
 			double result = 0;
 			
 			Polinomio.Variaveis.put('X', 1);
-			result = pol.Calcular();
+			result = pol.calcular();
 			if(result != 0)
 				throw new Exception("Teste 1 falhou. Esperava '0', recebeu '"+ result +"'");
 			
 			Polinomio.Variaveis.put('X', -5);
-			result = pol.Calcular();
+			result = pol.calcular();
 			if(result != 48)
 				throw new Exception("Teste 2 falhou. Esperava '48', recebeu '"+ result +"'");
 			
 			Polinomio.Variaveis.put('X', 100);
-			result = pol.Calcular();
+			result = pol.calcular();
 			if(result != 19998)
 				throw new Exception("Teste 3 falhou. Esperava '19998', recebeu '"+ result +"'");
 			
 			Polinomio.Variaveis.put('X', 0);
-			result = pol.Calcular();
+			result = pol.calcular();
 			if(result != -2)
 				throw new Exception("Teste 4 falhou. Esperava '-2', recebeu '"+ result +"'");
 			
+			System.out.println("Calculo terminou com sucesso!");
+			
 		} catch (Exception ex) {
-			throw new Exception("Teste de calculo falou. " + ex.getMessage());
+			throw new Exception("Teste de calculo falhou. " + ex.getMessage());
+		}
+	}
+	
+	public static void TesteCalcularSemantico() throws Exception {
+		try {
+			String pol = "2x^2-2";
+			HashMap<Character, Integer> mapa = new HashMap<>();
+			
+			double result = 0;
+			
+			mapa.put('X', 1);
+			result = Validador.calcular(pol, mapa);
+			if(result != 0)
+				throw new Exception("Teste 1 falhou. Esperava '0', recebeu '"+ result +"'");
+			
+			mapa.put('X', -5);
+			result = Validador.calcular(pol, mapa);
+			if(result != 48)
+				throw new Exception("Teste 2 falhou. Esperava '48', recebeu '"+ result +"'");
+			
+			mapa.put('X', 100);
+			result = Validador.calcular(pol, mapa);
+			if(result != 19998)
+				throw new Exception("Teste 3 falhou. Esperava '19998', recebeu '"+ result +"'");
+			
+			mapa.put('X', 0);
+			result = Validador.calcular(pol, mapa);
+			if(result != -2)
+				throw new Exception("Teste 4 falhou. Esperava '-2', recebeu '"+ result +"'");
+			
+			System.out.println("Calculo utilizando a classe semantico terminou com sucesso!");
+			
+		} catch (Exception ex) {
+			throw new Exception("Teste de calculo utilizando a classe semantico falhou. " + ex.getMessage());
 		}
 	}
 }
