@@ -121,7 +121,7 @@ public class Elemento implements Base {
 		}
 		if (this.potencia != null) {
 			if (potencia.numero != 1 && potencia.potencia != null)
-				saida += "^" + this.potencia.toString(true, variaveis);
+				saida += "^" + this.potencia.toString(traduzido, variaveis);
 		}
 		saida += ")";
 		return saida;
