@@ -14,6 +14,7 @@ public class Testes {
 			TesteValidar();
 			TesteCalcular();
 			TesteCalcularSemantico();
+			TesteEquivalencia();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -58,16 +59,17 @@ public class Testes {
 		try {
 			// 2x^2 - 2
 			Polinomio pol = new Polinomio();
-			pol.addExpressao(new Expressao());
+			Expressao expressao = new Expressao();
+			
+			pol.setExpressao(expressao);
 			Termo termo = new Termo();
-			pol.getUltimaExpressao().addTermo(termo);
+			expressao.addTermo(termo);
 			termo.addElementos(new Elemento(1, 2, 1));
 			termo.addElementos(new Elemento(1, 'X', 2));
 
-			pol.addExpressao(new Expressao());
-			pol.getUltimaExpressao().setSinal(-1);
 			termo = new Termo();
-			pol.getUltimaExpressao().addTermo(termo);
+			expressao.addTermo(termo);
+			termo.setSinal(-1);
 			termo.addElementos(new Elemento(1, 2, 1));
 
 			double result = 0;
@@ -131,15 +133,71 @@ public class Testes {
 
 			pol = Polinomio.criarPolinomio("2x^2-2(2*2^2x)");
 			mapa.put('X', 0);
-			int resultadoEsperado = 0;
+			double resultadoEsperado = 0;
 			result = pol.calcular(mapa);
 			if (result != resultadoEsperado)
 				throw new Exception("Teste 5 falhou. Esperava '" + resultadoEsperado + "', recebeu '" + result + "'");
+			
+			pol = Polinomio.criarPolinomio("x^-2");
+			mapa.put('X', 2);
+			resultadoEsperado = 0.25;
+			result = pol.calcular(mapa);
+			if (result != resultadoEsperado)
+				throw new Exception("Teste 6 falhou. Esperava '" + resultadoEsperado + "', recebeu '" + result + "'");
+
+			pol = Polinomio.criarPolinomio("x^-(-2)");
+			mapa.put('X', 2);
+			resultadoEsperado = 4;
+			result = pol.calcular(mapa);
+			if (result != resultadoEsperado)
+				throw new Exception("Teste 7 falhou. Esperava '" + resultadoEsperado + "', recebeu '" + result + "'");
+
+			pol = Polinomio.criarPolinomio("x^-(-2)+10");
+			mapa.put('X', 2);
+			resultadoEsperado = 14;
+			result = pol.calcular(mapa);
+			if (result != resultadoEsperado)
+				throw new Exception("Teste 8 falhou. Esperava '" + resultadoEsperado + "', recebeu '" + result + "'");
 
 			System.out.println("Calculo utilizando a classe semantico terminou com sucesso!");
 
 		} catch (Exception ex) {
 			throw new Exception("Teste de calculo utilizando a classe semantico falhou. " + ex.getMessage());
+		}
+	}
+	
+	
+	public static void TesteEquivalencia() throws Exception {
+		try {
+			Polinomio pol = Polinomio.criarPolinomio("(2+2x)");
+			Polinomio pol2 = Polinomio.criarPolinomio("2+2x");
+			if (!pol.EhEquivalente(pol2))
+				throw new Exception("Teste 0 falhou.");
+			
+			pol = Polinomio.criarPolinomio("2(2+2x)");
+			pol2 = Polinomio.criarPolinomio("4+4x");
+			if (!pol.EhEquivalente(pol2))
+				throw new Exception("Teste 1 falhou.");
+			
+			pol = Polinomio.criarPolinomio("2");
+			pol2 = Polinomio.criarPolinomio("4");
+			if (pol.EhEquivalente(pol2))
+				throw new Exception("Teste 2 falhou.");
+
+			pol = Polinomio.criarPolinomio("(2+2x)(2+2x)");
+			pol2 = Polinomio.criarPolinomio("4+4x+4x+4x^2");
+			if (!pol.EhEquivalente(pol2))
+				throw new Exception("Teste 3 falhou.");
+			
+			pol = Polinomio.criarPolinomio("(2+2x)(2+2x)");
+			pol2 = Polinomio.criarPolinomio("4+4x+4x+2x^2");
+			if (pol.EhEquivalente(pol2))
+				throw new Exception("Teste 4 falhou.");
+			
+			System.out.println("Calculo utilizando a classe semantico terminou com sucesso!");
+
+		} catch (Exception ex) {
+			throw new Exception("Verificação de equivalencia falhou. " + ex.getMessage());
 		}
 	}
 }

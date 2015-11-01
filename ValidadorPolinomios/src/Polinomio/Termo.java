@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Termo implements Base {
+	private int sinal;
 	private ArrayList<Elemento> elementos;
 	private Elemento ultimoElemento;
 	private Expressao origem;
 
 	public Termo() {
 		elementos = new ArrayList<>();
+		this.setSinal(1);
 	}
 
 	public ArrayList<Elemento> getElementos() {
@@ -37,6 +39,7 @@ public class Termo implements Base {
 				result *= elemento.calcular(variaveis);
 			}
 		}
+		result *= sinal;
 		return result;
 	}
 
@@ -48,6 +51,29 @@ public class Termo implements Base {
 	public void setOrigem(Base origem) {
 		this.origem = (Expressao) origem;
 	}
+	
+
+	public int getSinal() {
+		return sinal;
+	}
+
+	/**
+	 * Define o sinal da expressão
+	 * 
+	 * @param sinal
+	 *            -1=Negativo;1=Positivo
+	 */
+	public void setSinal(int sinal) {
+		this.sinal = sinal;
+	}
+
+	private String getSinalString() {
+		if(sinal == 1)
+			return "+";
+		else
+			return "-";
+	}
+	
 	
 	@Override
 	public String toString(boolean traduzido, HashMap<Character, Integer> variaveis) {
@@ -61,6 +87,7 @@ public class Termo implements Base {
 				result += "*" + elemento.toString(traduzido, variaveis);
 			}
 		}
+		result = getSinalString() + result;
 		return result;
 	}
 }

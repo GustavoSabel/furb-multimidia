@@ -1,8 +1,8 @@
 package Polinomio;
 
 import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import Analisador.LexicalError;
 import Analisador.Lexico;
@@ -12,28 +12,34 @@ import Analisador.Sintatico;
 import Analisador.SyntaticError;
 
 public class Polinomio implements Base {
-	/**
-	 * Variáveis que estão no polinômio utilizado para calcular o polinômio
-	 * Antes de executar o calculo, deve-se atribuir um valor para cada vari�vel
-	 * do dicion�rio
-	 */
-	public static HashMap<Character, Integer> Variaveis;
-	private ArrayList<Expressao> expressoes;
+
+	private HashMap<Character, Integer> variaveis;
+	private Expressao expressao;
 	private Expressao ultimaExpressao;
 
+	public static final int[] PRIMOS = { 2, 3, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73,
+			79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131 };
+
 	public Polinomio() {
-		expressoes = new ArrayList<Expressao>();
-		Polinomio.Variaveis = new HashMap<>();
+		variaveis = new HashMap<>();
 	}
 
-	public void addExpressao(Expressao expressao) {
+	public void addVariavel(Character variavel) {
+		variaveis.put(Character.toUpperCase(variavel), Integer.MIN_VALUE);
+	}
+
+	public HashMap<Character, Integer> getVariaveis() {
+		return variaveis;
+	}
+
+	public void setExpressao(Expressao expressao) {
 		this.ultimaExpressao = expressao;
 		expressao.setOrigem(this);
-		this.expressoes.add(expressao);
+		this.expressao = expressao;
 	}
 
-	public ArrayList<Expressao> getExpressoes() {
-		return expressoes;
+	public Expressao getExpressao() {
+		return expressao;
 	}
 
 	public Expressao getUltimaExpressao() {
@@ -55,22 +61,14 @@ public class Polinomio implements Base {
 	 */
 	@Override
 	public double calcular(HashMap<Character, Integer> variaveis) {
-		System.out.print("Calcular: ");
-		System.out.println(this.toString(true, variaveis));
-		double result = 0;
-		for (Expressao expressao : expressoes) {
-			result += expressao.calcular(variaveis);
-		}
+		double result = expressao.calcular(variaveis);
+		System.out.println("Resultado: " + this.toString(true, variaveis) + " = " + result);
 		return result;
 	}
 
 	@Override
 	public String toString(boolean traduzido, HashMap<Character, Integer> variaveis) {
-		String result = "";
-		for (Expressao expressao : expressoes) {
-			result += expressao.toString(true, variaveis);
-		}
-		return result;
+		return expressao.toString(traduzido, variaveis);
 	}
 
 	public static Polinomio criarPolinomio(String pol) {
@@ -93,5 +91,47 @@ public class Polinomio implements Base {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public boolean EhEquivalente(Polinomio pol) {
+		// Verifica se possui a mesma quantidade de variáveis
+		if (this.getVariaveis().size() != pol.getVariaveis().size())
+			return false;
+
+		// Verifica se as variáveis são as mesmas
+		for (Map.Entry<Character, Integer> entry : this.getVariaveis().entrySet()) {
+			if (!pol.getVariaveis().containsKey(entry.getKey()))
+				return false;
+		}
+
+		int contador = 0;
+		// Faz um teste substituindo as variáveis por números primos
+		for (Map.Entry<Character, Integer> entry : this.getVariaveis().entrySet()) {
+			entry.setValue(PRIMOS[contador++]);
+		}
+		if (this.calcular(this.getVariaveis()) != pol.calcular(this.getVariaveis()))
+			return false;
+
+		// Faz o mesmo teste com outros números primos
+		for (Map.Entry<Character, Integer> entry : this.getVariaveis().entrySet()) {
+			entry.setValue(PRIMOS[contador++]);
+		}
+		if (this.calcular(this.getVariaveis()) != pol.calcular(this.getVariaveis()))
+			return false;
+		// Faz o teste com tudo zero
+		for (Map.Entry<Character, Integer> entry : this.getVariaveis().entrySet()) {
+			entry.setValue(0);
+		}
+		if (this.calcular(this.getVariaveis()) != pol.calcular(this.getVariaveis()))
+			return false;
+
+		// Faz o teste com primos negativos
+		for (Map.Entry<Character, Integer> entry : this.getVariaveis().entrySet()) {
+			entry.setValue(-PRIMOS[contador++]);
+		}
+		if (this.calcular(this.getVariaveis()) != pol.calcular(this.getVariaveis()))
+			return false;
+
+		return true;
 	}
 }

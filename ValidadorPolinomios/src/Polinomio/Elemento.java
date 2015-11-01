@@ -73,7 +73,6 @@ public class Elemento implements Base {
 
 	public void setVariavel(char variavel) {
 		this.variavel = Character.toUpperCase(variavel);
-		Polinomio.Variaveis.put(this.variavel, Integer.MIN_VALUE);
 	}
 
 	public Expressao getExpressao() {
