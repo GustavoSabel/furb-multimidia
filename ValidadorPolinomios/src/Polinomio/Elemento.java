@@ -120,7 +120,7 @@ public class Elemento implements Base {
 			saida += String.valueOf(getNumero());
 		}
 		if (this.potencia != null) {
-			if (potencia.numero != 1 && potencia.potencia != null)
+			if (potencia.numero != 1 || potencia.potencia != null)
 				saida += "^" + this.potencia.toString(traduzido, variaveis);
 		}
 		saida += ")";
