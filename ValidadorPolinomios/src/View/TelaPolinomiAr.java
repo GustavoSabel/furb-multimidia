@@ -28,8 +28,19 @@ public class TelaPolinomiAr extends javax.swing.JFrame {
 			}
 		});
 
-		txtEntrada.setText(
-				"x^2 + 2 \n2x + 1 \n3x^(3 \n10+2x^2+3x^10 \n2-2+10x+x150^2+x(42)x+xx^2x^3 \n2^(-2^-5)^5+x^x^4 \nx^y^-y^w^+a");
+		StringBuilder str = new StringBuilder();
+		str.append("x^2 + 2").append("\n");
+		str.append("2x + 1").append("\n");
+		str.append("3x^(3").append("\n");
+		str.append("10+2x^2+3x^10").append("\n");
+		str.append("2-2+10x+x150^2+x(42)x+xx^2x^3").append("\n");
+		str.append("2^(-2^-5)^5+x^x^4").append("\n");
+		str.append("x^y^-y^w^+a").append("\n");
+		str.append("10+(((5)))").append("\n");
+		str.append("10*(((5)))").append("\n");
+		str.append("1^100*x").append("\n");
+
+		txtEntrada.setText(str.toString());
 
 		txtEntrada.setToolTipText(
 				"Podem ser informados vários polinômios para validar. Quebrar uma linha para cada polinômio diferente.");
@@ -71,11 +82,13 @@ public class TelaPolinomiAr extends javax.swing.JFrame {
 			String[] polinomios = txtEntrada.getText().split("\n");
 
 			for (String polinomio : polinomios) {
-				if (Polinomio.validar(polinomio)) {
-					txtSaida.append("Válido: " + Polinomio.criarPolinomio(polinomio).toString(false, null)
-							+ System.lineSeparator());
-				} else {
-					txtSaida.append("Inválido" + System.lineSeparator());
+				if (!polinomio.isEmpty()) {
+					if (Polinomio.validar(polinomio)) {
+						txtSaida.append("Válido: " + Polinomio.criarPolinomio(polinomio).toString(false, null)
+								+ System.lineSeparator());
+					} else {
+						txtSaida.append("Inválido" + System.lineSeparator());
+					}
 				}
 			}
 		} catch (AnalysisError e) {
