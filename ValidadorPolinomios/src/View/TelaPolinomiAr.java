@@ -1,7 +1,7 @@
 package View;
 
+import Analisador.AnalysisError;
 import Polinomio.Polinomio;
-import Polinomio.Validador;
 
 public class TelaPolinomiAr extends javax.swing.JFrame {
 
@@ -66,17 +66,21 @@ public class TelaPolinomiAr extends javax.swing.JFrame {
 	}
 
 	private void btnValidarActionPerformed(java.awt.event.ActionEvent evt) {
-		txtSaida.setText("");
-		String[] polinomios = txtEntrada.getText().split("\n");
+		try {
+			txtSaida.setText("");
+			String[] polinomios = txtEntrada.getText().split("\n");
 
-		for (String polinomio : polinomios) {
-			if (Validador.validar(polinomio)) {
-				txtSaida.append("Válido: " + Polinomio.criarPolinomio(polinomio).toString(false, null) + System.lineSeparator());
-			} else {
-				txtSaida.append("Inválido" + System.lineSeparator());
+			for (String polinomio : polinomios) {
+				if (Polinomio.validar(polinomio)) {
+					txtSaida.append("Válido: " + Polinomio.criarPolinomio(polinomio).toString(false, null)
+							+ System.lineSeparator());
+				} else {
+					txtSaida.append("Inválido" + System.lineSeparator());
+				}
 			}
+		} catch (AnalysisError e) {
+			e.printStackTrace();
 		}
-
 	}
 
 	public static void main(String args[]) {

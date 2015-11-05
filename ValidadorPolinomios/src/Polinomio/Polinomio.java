@@ -4,10 +4,12 @@ import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import Analisador.AnalysisError;
 import Analisador.LexicalError;
 import Analisador.Lexico;
 import Analisador.SemanticError;
 import Analisador.Semantico;
+import Analisador.SemanticoDummy;
 import Analisador.Sintatico;
 import Analisador.SyntaticError;
 
@@ -71,26 +73,16 @@ public class Polinomio implements Base {
 		return expressao.toString(traduzido, variaveis);
 	}
 
-	public static Polinomio criarPolinomio(String pol) {
-		try {
-			pol = pol.replaceAll("\\s+", "");
+	public static Polinomio criarPolinomio(String pol) throws AnalysisError {
+		pol = pol.replaceAll("\\s+", "");
 
-			StringReader read = new StringReader(pol);
-			Lexico lex = new Lexico(read);
-			Sintatico sintatico = new Sintatico();
-			Semantico semantico = new Semantico();
-			sintatico.parse(lex, semantico);
+		StringReader read = new StringReader(pol);
+		Lexico lex = new Lexico(read);
+		Sintatico sintatico = new Sintatico();
+		Semantico semantico = new Semantico();
+		sintatico.parse(lex, semantico);
 
-			return semantico.getPolinomio();
-
-		} catch (LexicalError e) {
-			e.printStackTrace();
-		} catch (SyntaticError e) {
-			e.printStackTrace();
-		} catch (SemanticError e) {
-			e.printStackTrace();
-		}
-		return null;
+		return semantico.getPolinomio();
 	}
 
 	public boolean EhEquivalente(Polinomio pol) {
@@ -133,5 +125,25 @@ public class Polinomio implements Base {
 			return false;
 
 		return true;
+	}
+
+	public static boolean validar(String polinomio) {
+		try {
+			polinomio = polinomio.replaceAll("\\s+", "");
+
+			StringReader read = new StringReader(polinomio);
+			Lexico lex = new Lexico(read);
+			Sintatico sintatico = new Sintatico();
+			sintatico.parse(lex, new SemanticoDummy());
+			
+			return true;
+		} catch (LexicalError e) {
+			e.printStackTrace();
+		} catch (SyntaticError e) {
+			e.printStackTrace();
+		} catch (SemanticError e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

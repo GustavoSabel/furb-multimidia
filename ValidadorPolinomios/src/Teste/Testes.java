@@ -6,11 +6,13 @@ import Polinomio.Elemento;
 import Polinomio.Expressao;
 import Polinomio.Polinomio;
 import Polinomio.Termo;
-import Polinomio.Validador;
 
 public class Testes {
 	public static void main(String[] args) {
 		try {
+			
+			Polinomio pol = Polinomio.criarPolinomio("2x^2/");
+			
 			TesteValidar();
 			TesteCalcular();
 			TesteCalcularSemantico();
@@ -24,28 +26,28 @@ public class Testes {
 	public static void TesteValidar() throws Exception {
 		try {
 
-			if (!Validador.validar("x^2 + 2"))
+			if (!Polinomio.validar("x^2 + 2"))
 				throw new Exception("Teste 1 falhou");
 
-			if (!Validador.validar("x^2 + (2)"))
+			if (!Polinomio.validar("x^2 + (2)"))
 				throw new Exception("Teste 2 falhou");
 
-			if (!Validador.validar("2x + 1"))
+			if (!Polinomio.validar("2x + 1"))
 				throw new Exception("Teste 3 falhou");
 
-			if (Validador.validar("3x^(3"))
+			if (Polinomio.validar("3x^(3"))
 				throw new Exception("Teste 4 falhou");
 
-			if (!Validador.validar("10+2x^2+3x^10"))
+			if (!Polinomio.validar("10+2x^2+3x^10"))
 				throw new Exception("Teste 5 falhou");
 
-			if (!Validador.validar("2-2+10x+x150^2+x(42)x+xx^2x^3"))
+			if (!Polinomio.validar("2-2+10x+x150^2+x(42)x+xx^2x^3"))
 				throw new Exception("Teste 6 falhou");
 
-			if (!Validador.validar("x^2 + (-2)"))
+			if (!Polinomio.validar("x^2 + (-2)"))
 				throw new Exception("Teste 7 falhou");
 
-			if (!Validador.validar("x^+2 + (-2)"))
+			if (!Polinomio.validar("x^+2 + (-2)"))
 				throw new Exception("Teste 8 falhou");
 
 			System.out.println("Validação terminou com sucesso!");
