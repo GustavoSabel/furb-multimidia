@@ -10,4 +10,6 @@ public interface Base {
 	public double calcular(HashMap<Character, Integer> variaveis);
 
 	public String toString(boolean traduzido, HashMap<Character, Integer> variaveis);
+	
+	public Base simplificar();
 }
