@@ -146,4 +146,10 @@ public class Polinomio implements Base {
 		}
 		return false;
 	}
+	
+	
+	public Polinomio simplificar(){
+		expressao.simplificar();	
+		return this;
+	}
 }

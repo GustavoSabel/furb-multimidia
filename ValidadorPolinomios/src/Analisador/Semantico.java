@@ -6,6 +6,7 @@ import Polinomio.Base;
 import Polinomio.Elemento;
 import Polinomio.Expressao;
 import Polinomio.Polinomio;
+import Polinomio.Sinal;
 import Polinomio.Termo;
 
 public class Semantico implements Constants {
@@ -90,7 +91,7 @@ public class Semantico implements Constants {
 	private void acao30(Token token) throws Exception {
 		Expressao expressao = (Expressao) pilha.peek();
 		Termo termo = new Termo();
-		termo.setSinal(getSinal(token));
+		termo.setSinal(Sinal.valueOf(getSinal(token)));
 		expressao.addTermo(termo);
 		pilha.push(termo);
 	}
@@ -139,6 +140,6 @@ public class Semantico implements Constants {
 
 	private void acao02(Token token) throws SemanticError {
 		Elemento elemento = (Elemento) this.pilha.peek();
-		elemento.setSinal(getSinal(token));
+		elemento.setSinal(Sinal.valueOf(getSinal(token)));
 	}
 }

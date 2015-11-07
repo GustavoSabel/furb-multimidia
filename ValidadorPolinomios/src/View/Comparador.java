@@ -9,6 +9,9 @@ public class Comparador {
 
 	public static void main(String[] args) {
 		try {
+			Polinomio pol1;
+			Polinomio pol2;
+			
 			verificaNumeroParametros(args, 2);
 
 			Operacao tipo = Operacao.valueOf(args[0]);
@@ -20,8 +23,16 @@ public class Comparador {
 					Sair(MsgRetorno.Incorreto);
 			case VerificaEquivalencia:
 				verificaNumeroParametros(args, 3);
-				Polinomio pol1 = Polinomio.criarPolinomio(args[1]);
-				Polinomio pol2 = Polinomio.criarPolinomio(args[2]);
+				pol1 = Polinomio.criarPolinomio(args[1]);
+				pol2 = Polinomio.criarPolinomio(args[2]);
+				if (!pol1.EhEquivalente(pol2))
+					Sair(MsgRetorno.Correto);
+				else
+					Sair(MsgRetorno.Incorreto);
+			case VerificaIgualdade:
+				verificaNumeroParametros(args, 3);
+				pol1 = Polinomio.criarPolinomio(args[1]).simplificar();
+				pol2 = Polinomio.criarPolinomio(args[2]).simplificar();
 				if (!pol1.EhEquivalente(pol2))
 					Sair(MsgRetorno.Correto);
 				else
@@ -62,10 +73,11 @@ public class Comparador {
 
 		VerificaSeValido(1), //
 		VerificaEquivalencia(2), //
-		VerificaSomaSubtracao(3), //
-		VerificaFatoracao(4), //
-		VerificaPropriedadeDistribuida(5), //
-		VerificaProdutosNotaveis(6);
+		VerificaIgualdade(3), //
+		VerificaSomaSubtracao(4), //
+		VerificaFatoracao(5), //
+		VerificaPropriedadeDistribuida(6), //
+		VerificaProdutosNotaveis(7);
 
 		private int value;
 

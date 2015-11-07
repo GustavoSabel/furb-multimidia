@@ -4,10 +4,8 @@ import java.util.HashMap;
 
 public class Elemento implements Base {
 	public static final char NULL_VARIAVEL = 0;
-	/**
-	 * 1 para positivo -1 para negativo
-	 */
-	private int sinal;
+	public static final double NULL_NUMERO = Double.MIN_VALUE;
+	private Sinal sinal;
 	private double numero;
 	private char variavel;
 	private Expressao expressao;
@@ -15,12 +13,12 @@ public class Elemento implements Base {
 	private Base origem;
 
 	public Elemento() {
-		setSinal(1);
-		setNumero(Integer.MIN_VALUE);
+		setSinal(Sinal.Positivo);
+		setNumero(NULL_NUMERO);
 		setVariavel(NULL_VARIAVEL);
 	}
 
-	public Elemento(int sinal, int numero, int potencia) {
+	public Elemento(Sinal sinal, int numero, int potencia) {
 		setSinal(sinal);
 		this.potencia = new Elemento();
 		this.potencia.setNumero(potencia);
@@ -28,11 +26,11 @@ public class Elemento implements Base {
 		setVariavel(NULL_VARIAVEL);
 	}
 
-	public Elemento(int sinal, char variavel, int potencia) {
+	public Elemento(Sinal sinal, char variavel, int potencia) {
 		setSinal(sinal);
 		this.potencia = new Elemento();
 		this.potencia.setNumero(potencia);
-		setNumero(Integer.MIN_VALUE);
+		setNumero(NULL_NUMERO);
 		setVariavel(variavel);
 	}
 
@@ -51,11 +49,11 @@ public class Elemento implements Base {
 		this.potencia = potencia;
 	}
 
-	public int getSinal() {
+	public Sinal getSinal() {
 		return sinal;
 	}
 
-	public void setSinal(int sinal) {
+	public void setSinal(Sinal sinal) {
 		this.sinal = sinal;
 	}
 
@@ -93,7 +91,7 @@ public class Elemento implements Base {
 		} else {
 			result = getNumero();
 		}
-		result = result * getSinal();
+		result = result * getSinal().getValue();
 		result = Math.pow(result, getPotenciaCalculada(variaveis));
 		return result;
 	}
@@ -108,14 +106,14 @@ public class Elemento implements Base {
 
 	@Override
 	public String toString(boolean traduzido, HashMap<Character, Integer> variaveis) {
-		String saida = "(" + getSinalString();
+		String saida = "";
 		if (getExpressao() != null) {
-			saida += "(" + getExpressao().toString(traduzido, variaveis) + ")";
+			saida += "[" + getExpressao().toString(traduzido, variaveis) + "]";
 		} else if (getVariavel() != Elemento.NULL_VARIAVEL) {
 			if (traduzido)
 				saida += variaveis.get(getVariavel());
 			else
-				saida += getVariavel() + "";
+				saida += String.valueOf(getVariavel());
 		} else {
 			saida += String.valueOf(getNumero());
 		}
@@ -123,14 +121,33 @@ public class Elemento implements Base {
 			if (potencia.numero != 1 || potencia.potencia != null)
 				saida += "^" + this.potencia.toString(traduzido, variaveis);
 		}
-		saida += ")";
+		if (sinal == Sinal.Negativo)
+			saida = "(" + sinal.toString() + saida + ")";
 		return saida;
 	}
 
-	private String getSinalString() {
-		if (sinal == 1)
-			return "+";
-		else
-			return "-";
+	public Elemento simplificar() {
+		if (this.expressao == null)
+			return this;
+
+		this.expressao.simplificar();
+
+		if (this.sinal == Sinal.Negativo) {
+			for (Termo termo : this.expressao.getTermos()) {
+				termo.setSinal(termo.getSinal().multiplicar(this.sinal));
+			}
+
+			this.sinal = this.sinal.inverter();
+		}
+
+		return this;
+	}
+
+	public boolean temPotencia() {
+		return this.potencia != null;
+	}
+
+	public boolean temNumero() {
+		return this.getNumero() != Elemento.NULL_NUMERO;
 	}
 }

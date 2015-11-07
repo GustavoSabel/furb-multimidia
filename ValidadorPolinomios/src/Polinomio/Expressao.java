@@ -33,7 +33,7 @@ public class Expressao implements Base {
 		}
 		return result;
 	}
-	
+
 	public Base getOrigem() {
 		return origem;
 	}
@@ -41,15 +41,34 @@ public class Expressao implements Base {
 	public void setOrigem(Base origem) {
 		this.origem = origem;
 	}
-	
+
 	@Override
 	public String toString(boolean traduzido, HashMap<Character, Integer> variaveis) {
 		String result = "";
-		for (Termo termo : termos) {
-			result += termo.toString(traduzido, variaveis);
+		for (int i = 0; i < termos.size(); i++) {
+			if(i > 0)
+				result += "+";
+			result += termos.get(i).toString(traduzido, variaveis);
 		}
 		return result;
 	}
 
+	public Expressao simplificar() {
+		for (int i = 0; i < termos.size(); i++) {
+			termos.get(i).simplificar();
+		}
+		return this;
+	}
 
+	public void substituir(Termo termoSubstituido, ArrayList<Termo> termosSubstituidores) {
+		int indexTermoSubstituido = this.termos.indexOf(termoSubstituido);
+		this.termos.remove(indexTermoSubstituido);
+
+		for (Termo termoSubstituidor : termosSubstituidores) {
+			Sinal novoSinal = Sinal.valueOf(termoSubstituidor.getSinal().getValue() * termoSubstituido.getSinal().getValue());
+			termoSubstituidor.setSinal(novoSinal);
+			termoSubstituidor.setOrigem(this);
+			this.termos.add(indexTermoSubstituido++, termoSubstituidor);
+		}
+	}
 }
