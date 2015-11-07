@@ -33,7 +33,7 @@ public class Comparador {
 				verificaNumeroParametros(args, 3);
 				pol1 = Polinomio.criarPolinomio(args[1]).simplificar();
 				pol2 = Polinomio.criarPolinomio(args[2]).simplificar();
-				if (!pol1.EhEquivalente(pol2))
+				if (!pol1.toString().equals(pol2.toString()))
 					Sair(MsgRetorno.Correto);
 				else
 					Sair(MsgRetorno.Incorreto);

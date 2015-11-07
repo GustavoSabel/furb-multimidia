@@ -84,7 +84,7 @@ public class TelaPolinomiAr extends javax.swing.JFrame {
 			for (String polinomio : polinomios) {
 				if (!polinomio.isEmpty()) {
 					if (Polinomio.validar(polinomio)) {
-						txtSaida.append("Válido: " + Polinomio.criarPolinomio(polinomio).simplificar().toString(false, null)
+						txtSaida.append("Válido: " + Polinomio.criarPolinomio(polinomio).simplificar().toString()
 								+ System.lineSeparator());
 					} else {
 						txtSaida.append("Inválido" + System.lineSeparator());

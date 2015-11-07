@@ -69,6 +69,10 @@ public class Polinomio implements Base {
 	}
 
 	@Override
+	public String toString() {
+		return expressao.toString(false, null);
+	}
+	
 	public String toString(boolean traduzido, HashMap<Character, Integer> variaveis) {
 		return expressao.toString(traduzido, variaveis);
 	}
