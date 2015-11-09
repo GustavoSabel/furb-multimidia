@@ -271,6 +271,11 @@ public class Testes {
 			if (pol.EhEquivalente(pol2))
 				throw new Exception("Teste 4 falhou.");
 			
+			pol = Polinomio.criarPolinomio("3x-2x");
+			pol2 = Polinomio.criarPolinomio("x");
+			if (!pol.EhEquivalente(pol2))
+				throw new Exception("Teste 5 falhou.");
+			
 			System.out.println("Calculo utilizando a classe semantico terminou com sucesso!");
 
 		} catch (Exception ex) {

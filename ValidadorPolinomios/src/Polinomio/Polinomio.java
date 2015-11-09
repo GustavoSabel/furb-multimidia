@@ -79,6 +79,7 @@ public class Polinomio implements Base {
 
 	public static Polinomio criarPolinomio(String pol) throws AnalysisError {
 		pol = pol.replaceAll("\\s+", "");
+		pol = pol.replaceAll(".", "*");
 
 		StringReader read = new StringReader(pol);
 		Lexico lex = new Lexico(read);
