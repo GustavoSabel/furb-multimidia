@@ -203,7 +203,7 @@ public class Testes {
 			if (result != -2)
 				throw new Exception("Teste 4 falhou. Esperava '-2', recebeu '" + result + "'");
 
-			pol = Polinomio.criarPolinomio("2x^2-2(2*2^2x)");
+			pol = Polinomio.criarPolinomio("2x^2-2.(2*2^2x)");
 			mapa.put('X', 0);
 			double resultadoEsperado = 0;
 			result = pol.simplificar().calcular(mapa);
