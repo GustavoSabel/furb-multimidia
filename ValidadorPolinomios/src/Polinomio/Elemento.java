@@ -2,7 +2,7 @@ package Polinomio;
 
 import java.util.HashMap;
 
-public class Elemento implements Base {
+public class Elemento extends Base {
 	public static final char NULL_VARIAVEL = 0;
 	public static final double NULL_NUMERO = Double.MIN_VALUE;
 	private Sinal sinal;
@@ -115,7 +115,7 @@ public class Elemento implements Base {
 			else
 				saida += String.valueOf(getVariavel());
 		} else {
-			saida += String.valueOf(getNumero());
+			saida += String.valueOf(getNumeroString());
 		}
 		if (this.potencia != null) {
 			if (potencia.numero != 1 || potencia.potencia != null)
@@ -124,6 +124,15 @@ public class Elemento implements Base {
 		if (sinal == Sinal.Negativo)
 			saida = "(" + sinal.toString() + saida + ")";
 		return saida;
+	}
+
+	private String getNumeroString() {
+		if ((this.numero % 1) == 0) {
+		    return String.valueOf((int)Math.floor(this.numero));
+		}
+		else {
+			return String.valueOf(this.numero);
+		}
 	}
 
 	public Elemento simplificar() {
@@ -150,4 +159,33 @@ public class Elemento implements Base {
 	public boolean temNumero() {
 		return this.getNumero() != Elemento.NULL_NUMERO;
 	}
+	
+	private boolean temVariavel() {
+		return this.variavel != NULL_VARIAVEL;
+	}
+	
+	@Override
+	public Base ordenar() {
+		if(temPotencia())
+			this.potencia.ordenar();
+		if(expressao != null)
+			this.expressao.ordenar();
+		return null;
+	}
+
+	@Override
+	public int getPeso() {
+		int total = 0;
+		if(this.expressao != null)
+			total += 0;
+		if(this.temVariavel())
+			total += 100;
+		if(this.temNumero())
+			total += (int)this.numero; 
+		if(this.temPotencia())
+			total += 1;
+		return total;
+	}
+
+
 }

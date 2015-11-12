@@ -39,6 +39,8 @@ public class TelaPolinomiAr extends javax.swing.JFrame {
 		str.append("10+(((5)))").append("\n");
 		str.append("10*(((5)))").append("\n");
 		str.append("1^100*x").append("\n");
+		str.append("(2x^2+2)").append("\n");
+		str.append("(2+2x^2)").append("\n");
 
 		txtEntrada.setText(str.toString());
 
@@ -84,7 +86,7 @@ public class TelaPolinomiAr extends javax.swing.JFrame {
 			for (String polinomio : polinomios) {
 				if (!polinomio.isEmpty()) {
 					if (Polinomio.validar(polinomio)) {
-						txtSaida.append("Válido: " + Polinomio.criarPolinomio(polinomio).simplificar().toString()
+						txtSaida.append("Válido: " + Polinomio.criarPolinomio(polinomio).simplificar().ordenar().toString()
 								+ System.lineSeparator());
 					} else {
 						txtSaida.append("Inválido" + System.lineSeparator());

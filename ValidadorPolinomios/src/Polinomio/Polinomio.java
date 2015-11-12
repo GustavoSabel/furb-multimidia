@@ -13,11 +13,10 @@ import Analisador.SemanticoDummy;
 import Analisador.Sintatico;
 import Analisador.SyntaticError;
 
-public class Polinomio implements Base {
+public class Polinomio extends Base {
 
 	private HashMap<Character, Integer> variaveis;
 	private Expressao expressao;
-	private Expressao ultimaExpressao;
 
 	public static final int[] PRIMOS = { 2, 3, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73,
 			79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131 };
@@ -35,17 +34,12 @@ public class Polinomio implements Base {
 	}
 
 	public void setExpressao(Expressao expressao) {
-		this.ultimaExpressao = expressao;
 		expressao.setOrigem(this);
 		this.expressao = expressao;
 	}
 
 	public Expressao getExpressao() {
 		return expressao;
-	}
-
-	public Expressao getUltimaExpressao() {
-		return ultimaExpressao;
 	}
 
 	@Override
@@ -66,11 +60,6 @@ public class Polinomio implements Base {
 		double result = expressao.calcular(variaveis);
 		System.out.println("Resultado: " + this.toString(true, variaveis) + " = " + result);
 		return result;
-	}
-
-	@Override
-	public String toString() {
-		return expressao.toString(false, null);
 	}
 	
 	public String toString(boolean traduzido, HashMap<Character, Integer> variaveis) {
@@ -156,5 +145,16 @@ public class Polinomio implements Base {
 	public Polinomio simplificar(){
 		expressao.simplificar();	
 		return this;
+	}
+
+	@Override
+	public Base ordenar() {
+		expressao.ordenar();
+		return this;
+	}
+
+	@Override
+	public int getPeso() {
+		return expressao.getPeso();
 	}
 }

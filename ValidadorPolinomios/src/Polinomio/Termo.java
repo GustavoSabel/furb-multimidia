@@ -3,7 +3,7 @@ package Polinomio;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Termo implements Base {
+public class Termo extends Base {
 	private Sinal sinal;
 	private ArrayList<Elemento> elementos;
 	private Elemento ultimoElemento;
@@ -176,5 +176,23 @@ public class Termo implements Base {
 			this.elementos.add(indexElementoSubstituido++, elementoSubstituidor);
 		}
 
+	}
+
+	@Override
+	public Base ordenar() {
+		for (Elemento elemento : elementos) {
+			elemento.ordenar();
+		}
+		this.ordernar(elementos);
+		return this;
+	}
+
+	@Override
+	public int getPeso() {
+		int total = 0;
+		for (Elemento elemento : elementos) {
+			total += elemento.getPeso();
+		}
+		return total;
 	}
 }

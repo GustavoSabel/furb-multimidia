@@ -3,7 +3,7 @@ package Polinomio;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Expressao implements Base {
+public class Expressao extends Base {
 	private ArrayList<Termo> termos;
 	private Termo ultimoTermo;
 	private Base origem;
@@ -46,7 +46,7 @@ public class Expressao implements Base {
 	public String toString(boolean traduzido, HashMap<Character, Integer> variaveis) {
 		String result = "";
 		for (int i = 0; i < termos.size(); i++) {
-			if(i > 0)
+			if (i > 0)
 				result += "+";
 			result += termos.get(i).toString(traduzido, variaveis);
 		}
@@ -65,10 +65,50 @@ public class Expressao implements Base {
 		this.termos.remove(indexTermoSubstituido);
 
 		for (Termo termoSubstituidor : termosSubstituidores) {
-			Sinal novoSinal = Sinal.valueOf(termoSubstituidor.getSinal().getValue() * termoSubstituido.getSinal().getValue());
+			Sinal novoSinal = Sinal
+					.valueOf(termoSubstituidor.getSinal().getValue() * termoSubstituido.getSinal().getValue());
 			termoSubstituidor.setSinal(novoSinal);
 			termoSubstituidor.setOrigem(this);
 			this.termos.add(indexTermoSubstituido++, termoSubstituidor);
 		}
+	}
+
+	@Override
+	public Base ordenar() {
+
+		for (Termo termo : termos) {
+			termo.ordenar();
+		}
+		
+		this.ordernar(termos);
+		
+		/*Termo termoAux = null;
+		boolean teveTroca = false;
+		int max = termos.size() - 1;
+		for (int i = 0; i < termos.size(); i++) {
+			teveTroca = false;
+			for (int j = 0; j < max; j++) {
+				if (termos.get(j).getPeso() > termos.get(j + 1).getPeso()) {
+					termoAux = termos.remove(j);
+					termos.add(termos.get(j + 1));
+					termos.add(j + 1, termoAux);
+					teveTroca = true;
+				}
+			}
+			if (!teveTroca)
+				break;
+			max--;
+		}*/
+
+		return this;
+	}
+
+	@Override
+	public int getPeso() {
+		int total = 0;
+		for (Termo termo : termos) {
+			total += termo.getPeso();
+		}
+		return total;
 	}
 }
