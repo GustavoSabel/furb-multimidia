@@ -16,7 +16,7 @@ public abstract class Base {
 
 	public abstract Base ordenar();
 
-	protected <T extends Base> Base ordernar (ArrayList<T> dados) {
+	protected <T extends Base> ArrayList<T> ordernar (ArrayList<T> dados) {
 		T baseAux = null;
 		boolean teveTroca = false;
 		int max = dados.size() - 1;
@@ -35,7 +35,7 @@ public abstract class Base {
 			max--;
 		}
 
-		return this;
+		return dados;
 	}
 
 	public abstract int getPeso();

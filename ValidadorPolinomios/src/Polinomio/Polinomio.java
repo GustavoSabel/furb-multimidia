@@ -148,7 +148,7 @@ public class Polinomio extends Base {
 	}
 
 	@Override
-	public Base ordenar() {
+	public Polinomio ordenar() {
 		expressao.ordenar();
 		return this;
 	}

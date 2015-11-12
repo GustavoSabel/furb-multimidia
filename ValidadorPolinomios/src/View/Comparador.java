@@ -31,8 +31,8 @@ public class Comparador {
 					Sair(MsgRetorno.Incorreto);
 			case VerificaIgualdade:
 				verificaNumeroParametros(args, 3);
-				pol1 = Polinomio.criarPolinomio(args[1]).simplificar();
-				pol2 = Polinomio.criarPolinomio(args[2]).simplificar();
+				pol1 = Polinomio.criarPolinomio(args[1]).simplificar().ordenar();
+				pol2 = Polinomio.criarPolinomio(args[2]).simplificar().ordenar();
 				if (pol1.toString().equals(pol2.toString()))
 					Sair(MsgRetorno.Correto);
 				else
