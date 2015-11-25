@@ -1,162 +1,165 @@
-﻿using System.Text;
+﻿using System;
+using System.IO;
+using System.Text;
+using Analisador;
 
 namespace Analisador
 {
 
-	public class Lexico : Constants
-	{
-		private int position;
-		private string input;
+    public class Lexico : Constants
+    {
+        private int position;
+        private string input;
 
-		public Lexico() : this(new java.io.StringReader(""))
-		{
-		}
+        public Lexico() : this(new StringReader(""))
+        {
+        }
 
-		public Lexico(java.io.Reader input)
-		{
-			Input = input;
-		}
+        public Lexico(TextReader input)
+        {
+            Input = input;
+        }
 
-		public virtual java.io.Reader Input
-		{
-			set
-			{
-				StringBuilder bfr = new StringBuilder();
-				try
-				{
-					int c = value.read();
-					while (c != -1)
-					{
-						bfr.Append((char)c);
-						c = value.read();
-					}
-					this.input = bfr.ToString();
-				}
-				catch (java.io.IOException e)
-				{
-					Console.WriteLine(e.ToString());
-					Console.Write(e.StackTrace);
-				}
-    
-				Position = 0;
-			}
-		}
+        public virtual TextReader Input
+        {
+            set
+            {
+                StringBuilder bfr = new StringBuilder();
+                try
+                {
+                    int c = value.Read();
+                    while (c != -1)
+                    {
+                        bfr.Append((char)c);
+                        c = value.Read();
+                    }
+                    this.input = bfr.ToString();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    Console.Write(e.StackTrace);
+                }
 
-		public virtual int Position
-		{
-			set
-			{
-				position = value;
-			}
-		}
+                Position = 0;
+            }
+        }
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public Token nextToken() throws LexicalError
-		public virtual Token nextToken()
-		{
-			if (!hasInput())
-			{
-				return null;
-			}
+        public virtual int Position
+        {
+            set
+            {
+                position = value;
+            }
+        }
 
-			int start = position;
+        //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
+        //ORIGINAL LINE: public Token nextToken() throws LexicalError
+        public virtual Token nextToken()
+        {
+            if (!hasInput())
+            {
+                return null;
+            }
 
-			int state = 0;
-			int lastState = 0;
-			int endState = -1;
-			int end = -1;
+            int start = position;
 
-			while (hasInput())
-			{
-				lastState = state;
-				state = nextState(nextChar(), state);
+            int state = 0;
+            int lastState = 0;
+            int endState = -1;
+            int end = -1;
 
-				if (state < 0)
-				{
-					break;
-				}
+            while (hasInput())
+            {
+                lastState = state;
+                state = nextState(nextChar(), state);
 
-				else
-				{
-					if (tokenForState(state) >= 0)
-					{
-						endState = state;
-						end = position;
-					}
-				}
-			}
-			if (endState < 0 || (endState != state && tokenForState(lastState) == -2))
-			{
-				throw new LexicalError(ScannerConstants_Fields.SCANNER_ERROR[lastState], start);
-			}
+                if (state < 0)
+                {
+                    break;
+                }
 
-			position = end;
+                else
+                {
+                    if (tokenForState(state) >= 0)
+                    {
+                        endState = state;
+                        end = position;
+                    }
+                }
+            }
+            if (endState < 0 || (endState != state && tokenForState(lastState) == -2))
+            {
+                throw new LexicalError(ScannerConstants_Fields.SCANNER_ERROR[lastState], start);
+            }
 
-			int token = tokenForState(endState);
+            position = end;
 
-			if (token == 0)
-			{
-				return nextToken();
-			}
-			else
-			{
-				string lexeme = input.Substring(start, end - start);
-				return new Token(token, lexeme, start);
-			}
-		}
+            int token = tokenForState(endState);
 
-		private int nextState(char c, int state)
-		{
-			int start = ScannerConstants_Fields.SCANNER_TABLE_INDEXES[state];
-			int end = ScannerConstants_Fields.SCANNER_TABLE_INDEXES[state+1] - 1;
+            if (token == 0)
+            {
+                return nextToken();
+            }
+            else
+            {
+                string lexeme = input.Substring(start, end - start);
+                return new Token(token, lexeme, start);
+            }
+        }
 
-			while (start <= end)
-			{
-				int half = (start + end) / 2;
+        private int nextState(int c, int state)
+        {
+            int start = ScannerConstants_Fields.SCANNER_TABLE_INDEXES[state];
+            int end = ScannerConstants_Fields.SCANNER_TABLE_INDEXES[state + 1] - 1;
 
-				if (ScannerConstants_Fields.SCANNER_TABLE[half][0] == c)
-				{
-					return ScannerConstants_Fields.SCANNER_TABLE[half][1];
-				}
-				else if (ScannerConstants_Fields.SCANNER_TABLE[half][0] < c)
-				{
-					start = half + 1;
-				}
-				else //(SCANNER_TABLE[half][0] > c)
-				{
-					end = half - 1;
-				}
-			}
+            while (start <= end)
+            {
+                int half = (start + end) / 2;
 
-			return -1;
-		}
+                if (ScannerConstants_Fields.SCANNER_TABLE[half][0] == c)
+                {
+                    return ScannerConstants_Fields.SCANNER_TABLE[half][1];
+                }
+                else if (ScannerConstants_Fields.SCANNER_TABLE[half][0] < c)
+                {
+                    start = half + 1;
+                }
+                else //(SCANNER_TABLE[half][0] > c)
+                {
+                    end = half - 1;
+                }
+            }
 
-		private int tokenForState(int state)
-		{
-			if (state < 0 || state >= ScannerConstants_Fields.TOKEN_STATE.Length)
-			{
-				return -1;
-			}
+            return -1;
+        }
 
-			return ScannerConstants_Fields.TOKEN_STATE[state];
-		}
+        private int tokenForState(int state)
+        {
+            if (state < 0 || state >= ScannerConstants_Fields.TOKEN_STATE.Length)
+            {
+                return -1;
+            }
 
-		private bool hasInput()
-		{
-			return position < input.Length;
-		}
+            return ScannerConstants_Fields.TOKEN_STATE[state];
+        }
 
-		private char nextChar()
-		{
-			if (hasInput())
-			{
-				return input[position++];
-			}
-			else
-			{
-				return (char) - 1;
-			}
-		}
-	}
+        private bool hasInput()
+        {
+            return position < input.Length;
+        }
+
+        private int nextChar()
+        {
+            if (hasInput())
+            {
+                return input[position++];
+            }
+            else
+            {
+                return -1;
+            }
+        }
+    }
 
 }

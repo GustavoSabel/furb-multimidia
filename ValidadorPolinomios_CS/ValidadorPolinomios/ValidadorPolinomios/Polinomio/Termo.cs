@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace Polinomio
+namespace ValidadorPolinomios.Polinomio
 {
-
-
 	public class Termo : Base
 	{
 		private Sinal sinal;
@@ -13,7 +12,7 @@ namespace Polinomio
 
 		public Termo()
 		{
-			elementos = new List<>();
+			elementos = new List<Elemento>();
 			this.Sinal = Sinal.Positivo;
 		}
 
@@ -40,7 +39,7 @@ namespace Polinomio
 			}
 		}
 
-		public override double calcular(Dictionary<char?, int?> variaveis)
+		public override double calcular(Dictionary<char, int> variaveis)
 		{
 			double result = 0;
 			bool primeiro = true;
@@ -60,16 +59,6 @@ namespace Polinomio
 			return result;
 		}
 
-		public override Expressao getOrigem()
-		{
-			return origem;
-		}
-
-		public override void setOrigem(Base origem)
-		{
-			this.origem = (Expressao) origem;
-		}
-
 		public virtual Sinal Sinal
 		{
 			get
@@ -83,7 +72,7 @@ namespace Polinomio
 		}
 
 
-		public override string ToString(bool traduzido, Dictionary<char?, int?> variaveis)
+		public override string ToString(bool traduzido, Dictionary<char, int> variaveis)
 		{
 			string result = "";
 			bool primeiro = true;
@@ -106,7 +95,7 @@ namespace Polinomio
 			return result;
 		}
 
-		public override Termo simplificar()
+		public override Base simplificar()
 		{
 
 			// Retira os 1 desnecessários
@@ -245,6 +234,5 @@ namespace Polinomio
 				return total;
 			}
 		}
-	}
-
+    }
 }

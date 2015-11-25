@@ -1,27 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ValidadorPolinomios.Polinomio;
+using System.Collections;
+using System;
 
 namespace Analisador
-{
-
-	using Base = Polinomio.Base;
-	using Elemento = Polinomio.Elemento;
-	using Expressao = Polinomio.Expressao;
-	using Polinomio = Polinomio.Polinomio;
-	using Sinal = Polinomio.Polinomio.Sinal;
-	using Termo = Polinomio.Polinomio.Termo;
-
+{ 
 	public class Semantico : Constants
 	{
-
-		internal Stack<Polinomio.Base> pilha;
-		internal Polinomio polinomio;
+        Stack pilha;
+		Polinomio polinomio;
 
 		public Semantico()
 		{
-			pilha = new Stack<>();
+			pilha = new Stack();
 			polinomio = new Polinomio();
-			Polinomio.Expressao expressao = new Polinomio.Expressao();
+			Expressao expressao = new Expressao();
 			polinomio.Expressao = expressao;
 			pilha.Push(expressao);
 		}
@@ -96,8 +88,8 @@ namespace Analisador
 //ORIGINAL LINE: private void acao40(Token token) throws Exception
 		private void acao40(Token token)
 		{
-			Polinomio.Elemento elemento = (Polinomio.Elemento) pilha.Peek();
-			Polinomio.Elemento elementoPotencia = new Polinomio.Elemento();
+			Elemento elemento = (Elemento) pilha.Peek();
+			Elemento elementoPotencia = new Elemento();
 			elemento.Potencia = elementoPotencia;
 			pilha.Push(elementoPotencia);
 		}
@@ -106,11 +98,11 @@ namespace Analisador
 //ORIGINAL LINE: private void acao31(Token token) throws Exception
 		private void acao31(Token token)
 		{
-			Polinomio.Base obj = this.pilha.Pop();
-			if (!(obj is Polinomio.Termo))
+			Base obj = (Base)this.pilha.Pop();
+			if (!(obj is Termo))
 			{
 //JAVA TO C# CONVERTER WARNING: The .NET Type.FullName property will not always yield results identical to the Java Class.getName method:
-				throw new Exception("Erro. Esperando tipo '" + typeof(Polinomio.Termo).FullName + "'. Encontrato o tipo '" + obj.GetType().FullName + "'.");
+				throw new Exception("Erro. Esperando tipo '" + typeof(Termo).FullName + "'. Encontrato o tipo '" + obj.GetType().FullName + "'.");
 			}
 		}
 
@@ -118,9 +110,9 @@ namespace Analisador
 //ORIGINAL LINE: private void acao30(Token token) throws Exception
 		private void acao30(Token token)
 		{
-			Polinomio.Expressao expressao = (Polinomio.Expressao) pilha.Peek();
-			Polinomio.Termo termo = new Polinomio.Termo();
-			termo.Sinal = Polinomio.Sinal.valueOf(getSinal(token));
+			Expressao expressao = (Expressao) pilha.Peek();
+			Termo termo = new Termo();
+			termo.Sinal = Sinal.valueOf(getSinal(token));
 			expressao.addTermo(termo);
 			pilha.Push(termo);
 		}
@@ -129,18 +121,18 @@ namespace Analisador
 //ORIGINAL LINE: private void acao21(Token token) throws Exception
 		private void acao21(Token token)
 		{
-			Polinomio.Base obj = this.pilha.Pop();
-			if (!(obj is Polinomio.Elemento))
+			Base obj = (Base)this.pilha.Pop();
+			if (!(obj is Elemento))
 			{
 //JAVA TO C# CONVERTER WARNING: The .NET Type.FullName property will not always yield results identical to the Java Class.getName method:
-				throw new Exception("Erro. Esperando tipo '" + typeof(Polinomio.Elemento).FullName + "'. Encontrato o tipo '" + obj.GetType().FullName + "'.");
+				throw new Exception("Erro. Esperando tipo '" + typeof(Elemento).FullName + "'. Encontrato o tipo '" + obj.GetType().FullName + "'.");
 			}
 		}
 
 		private void acao20(Token token)
 		{
-			Polinomio.Termo termo = (Polinomio.Termo) this.pilha.Peek();
-			Polinomio.Elemento elemento = new Polinomio.Elemento();
+			Termo termo = (Termo) this.pilha.Peek();
+			Elemento elemento = new Elemento();
 			termo.addElementos(elemento);
 			this.pilha.Push(elemento);
 		}
@@ -149,18 +141,18 @@ namespace Analisador
 //ORIGINAL LINE: private void acao06(Token token) throws Exception
 		private void acao06(Token token)
 		{
-			Polinomio.Base obj = this.pilha.Pop();
-			if (!(obj is Polinomio.Expressao))
+			Base obj = (Base)this.pilha.Pop();
+			if (!(obj is Expressao))
 			{
 //JAVA TO C# CONVERTER WARNING: The .NET Type.FullName property will not always yield results identical to the Java Class.getName method:
-				throw new Exception("Erro. Esperando tipo '" + typeof(Polinomio.Expressao).FullName + "'. Encontrato o tipo '" + obj.GetType().FullName + "'.");
+				throw new Exception("Erro. Esperando tipo '" + typeof(Expressao).FullName + "'. Encontrato o tipo '" + obj.GetType().FullName + "'.");
 			}
 		}
 
 		private void acao05(Token token)
 		{
-			Polinomio.Elemento elemento = (Polinomio.Elemento) this.pilha.Peek();
-			Polinomio.Expressao expressao = new Polinomio.Expressao();
+			Elemento elemento = (Elemento) this.pilha.Peek();
+			Expressao expressao = new Expressao();
 			expressao.Origem = elemento;
 			elemento.Expressao = expressao;
 			this.pilha.Push(expressao);
@@ -168,14 +160,14 @@ namespace Analisador
 
 		private void acao04(Token token)
 		{
-			Polinomio.Elemento elemento = (Polinomio.Elemento) this.pilha.Peek();
+			Elemento elemento = (Elemento) this.pilha.Peek();
 			elemento.Variavel = token.Lexeme[0];
 			polinomio.addVariavel(token.Lexeme[0]);
 		}
 
 		private void acao03(Token token)
 		{
-			Polinomio.Elemento elemento = (Polinomio.Elemento) this.pilha.Peek();
+			Elemento elemento = (Elemento) this.pilha.Peek();
 			elemento.Numero = double.Parse(token.Lexeme);
 		}
 
@@ -183,8 +175,8 @@ namespace Analisador
 //ORIGINAL LINE: private void acao02(Token token) throws SemanticError
 		private void acao02(Token token)
 		{
-			Polinomio.Elemento elemento = (Polinomio.Elemento) this.pilha.Peek();
-			elemento.Sinal = Polinomio.Sinal.valueOf(getSinal(token));
+			Elemento elemento = (Elemento) this.pilha.Peek();
+			elemento.Sinal = Sinal.valueOf(getSinal(token));
 		}
 	}
 

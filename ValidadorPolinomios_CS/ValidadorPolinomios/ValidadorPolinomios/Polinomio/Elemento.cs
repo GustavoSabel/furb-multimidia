@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Polinomio
+namespace ValidadorPolinomios.Polinomio
 {
-
 	public class Elemento : Base
 	{
 		public const char NULL_VARIAVEL = (char)0;
@@ -53,7 +52,7 @@ namespace Polinomio
 			}
 		}
 
-		public virtual double getPotenciaCalculada(Dictionary<char?, int?> variaveis)
+		public virtual double getPotenciaCalculada(Dictionary<char, int> variaveis)
 		{
 			if (potencia == null)
 			{
@@ -61,7 +60,6 @@ namespace Polinomio
 			}
 			return potencia.calcular(variaveis);
 		}
-
 
 		public virtual Sinal Sinal
 		{
@@ -75,7 +73,6 @@ namespace Polinomio
 			}
 		}
 
-
 		public virtual double Numero
 		{
 			get
@@ -88,7 +85,6 @@ namespace Polinomio
 			}
 		}
 
-
 		public virtual char Variavel
 		{
 			get
@@ -100,7 +96,6 @@ namespace Polinomio
 				this.variavel = char.ToUpper(value);
 			}
 		}
-
 
 		public virtual Expressao Expressao
 		{
@@ -115,8 +110,7 @@ namespace Polinomio
 			}
 		}
 
-
-		public override double calcular(Dictionary<char?, int?> variaveis)
+		public override double calcular(Dictionary<char, int> variaveis)
 		{
 			double result = 0;
 			if (Expressao != null)
@@ -125,7 +119,7 @@ namespace Polinomio
 			}
 			else if (Variavel != Elemento.NULL_VARIAVEL)
 			{
-				result = variaveis[Variavel].Value;
+				result = variaveis[Variavel];
 			}
 			else
 			{
@@ -136,20 +130,7 @@ namespace Polinomio
 			return result;
 		}
 
-		public override Base Origem
-		{
-			get
-			{
-				return origem;
-			}
-			set
-			{
-				this.origem = value;
-			}
-		}
-
-
-		public override string ToString(bool traduzido, Dictionary<char?, int?> variaveis)
+		public override string ToString(bool traduzido, Dictionary<char, int> variaveis)
 		{
 			string saida = "";
 			if (Expressao != null)
@@ -160,7 +141,7 @@ namespace Polinomio
 			{
 				if (traduzido)
 				{
-					saida += variaveis[Variavel].Value;
+					saida += variaveis[Variavel];
 				}
 				else
 				{
@@ -200,7 +181,7 @@ namespace Polinomio
 			}
 		}
 
-		public override Elemento simplificar()
+		public override Base simplificar()
 		{
 			if (this.expressao == null)
 			{
@@ -274,7 +255,6 @@ namespace Polinomio
 				return total;
 			}
 		}
-
 
 	}
 

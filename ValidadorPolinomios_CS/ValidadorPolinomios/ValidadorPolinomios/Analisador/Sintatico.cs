@@ -13,17 +13,17 @@ namespace Analisador
 
 		private static bool isTerminal(int x)
 		{
-			return x < FIRST_NON_TERMINAL;
+			return x < ParserConstants_Fields.FIRST_NON_TERMINAL;
 		}
 
 		private static bool isNonTerminal(int x)
 		{
-			return x >= FIRST_NON_TERMINAL && x < FIRST_SEMANTIC_ACTION;
+			return x >= ParserConstants_Fields.FIRST_NON_TERMINAL && x < ParserConstants_Fields.FIRST_SEMANTIC_ACTION;
 		}
 
 		private static bool isSemanticAction(int x)
 		{
-			return x >= FIRST_SEMANTIC_ACTION;
+			return x >= ParserConstants_Fields.FIRST_SEMANTIC_ACTION;
 		}
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
@@ -65,7 +65,7 @@ namespace Analisador
 				}
 				else
 				{
-					throw new SyntaticError(PARSER_ERROR[x], currentToken.Position);
+					throw new SyntaticError(ParserConstants_Fields.PARSER_ERROR[x], currentToken.Position);
 				}
 			}
 			else if (isNonTerminal(x))
@@ -76,22 +76,22 @@ namespace Analisador
 				}
 				else
 				{
-					throw new SyntaticError(PARSER_ERROR[x], currentToken.Position);
+					throw new SyntaticError(ParserConstants_Fields.PARSER_ERROR[x], currentToken.Position);
 				}
 			}
 			else // isSemanticAction(x)
 			{
-				semanticAnalyser.executeAction(x - FIRST_SEMANTIC_ACTION, previousToken);
+				semanticAnalyser.executeAction(x - ParserConstants_Fields.FIRST_SEMANTIC_ACTION, previousToken);
 				return false;
 			}
 		}
 
 		private bool pushProduction(int topStack, int tokenInput)
 		{
-			int p = PARSER_TABLE[topStack - FIRST_NON_TERMINAL][tokenInput - 1];
+			int p = ParserConstants_Fields.PARSER_TABLE[topStack - ParserConstants_Fields.FIRST_NON_TERMINAL][tokenInput - 1];
 			if (p >= 0)
 			{
-				int[] production = PRODUCTIONS[p];
+				int[] production = ParserConstants_Fields.PRODUCTIONS[p];
 				//empilha a produ��o em ordem reversa
 				for (int i = production.Length - 1; i >= 0; i--)
 				{
@@ -114,7 +114,7 @@ namespace Analisador
 
 			stack.Clear();
 			stack.Push(new int?(Constants_Fields.DOLLAR));
-			stack.Push(new int?(START_SYMBOL));
+			stack.Push(new int?(ParserConstants_Fields.START_SYMBOL));
 
 			currentToken = scanner.nextToken();
 

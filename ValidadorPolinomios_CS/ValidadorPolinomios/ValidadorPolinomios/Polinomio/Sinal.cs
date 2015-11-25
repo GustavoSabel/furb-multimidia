@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Polinomio
+namespace ValidadorPolinomios.Polinomio
 {
 
 	public sealed class Sinal

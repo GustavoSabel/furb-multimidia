@@ -1,44 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using ValidadorPolinomios.Polinomio;
 
 namespace Teste
 {
-
-	using Elemento = Polinomio.Elemento;
-	using Expressao = Polinomio.Expressao;
-	using Polinomio = Polinomio.Polinomio;
-	using Sinal = Polinomio.Polinomio.Sinal;
-	using Termo = Polinomio.Polinomio.Termo;
-
 	public class Testes
 	{
-		public static void Main(string[] args)
+        public static void TestarPrograma()
+        {
+            try
+            {
+                TesteValidar();
+                TesteCalcular();
+                TesteCalcularSemantico();
+                TesteCalcularSemanticoSimplificado();
+                TesteEquivalencia();
+
+                Console.WriteLine("TESTE FINALIZADOS COM SUCESSO!!");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                Console.Write(e.StackTrace);
+            }
+
+        }
+
+        public static void TesteValidar()
 		{
 			try
 			{
-				TesteValidar();
-				TesteCalcular();
-				TesteCalcularSemantico();
-				TesteCalcularSemanticoSimplificado();
-				TesteEquivalencia();
-
-				Console.WriteLine("TESTE FINALIZADOS COM SUCESSO!!");
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e.ToString());
-				Console.Write(e.StackTrace);
-			}
-
-		}
-
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static void TesteValidar() throws Exception
-		public static void TesteValidar()
-		{
-			try
-			{
-
 				if (!Polinomio.validar("x^2 + 2"))
 				{
 					throw new Exception("Teste 1 falhou");
@@ -96,22 +87,22 @@ namespace Teste
 			{
 				// 2x^2 - 2
 				Polinomio pol = new Polinomio();
-				Polinomio.Expressao expressao = new Polinomio.Expressao();
+				Expressao expressao = new Expressao();
 
 				pol.Expressao = expressao;
-				Polinomio.Termo termo = new Polinomio.Termo();
+				Termo termo = new Termo();
 				expressao.addTermo(termo);
-				termo.addElementos(new Polinomio.Elemento(Polinomio.Sinal.Positivo, 2, 1));
-				termo.addElementos(new Polinomio.Elemento(Polinomio.Sinal.Positivo, 'X', 2));
+				termo.addElementos(new Elemento(Sinal.Positivo, 2, 1));
+				termo.addElementos(new Elemento(Sinal.Positivo, 'X', 2));
 
-				termo = new Polinomio.Termo();
+				termo = new Termo();
 				expressao.addTermo(termo);
-				termo.Sinal = Polinomio.Sinal.Negativo;
-				termo.addElementos(new Polinomio.Elemento(Polinomio.Sinal.Positivo, 2, 1));
+				termo.Sinal = Sinal.Negativo;
+				termo.addElementos(new Elemento(Sinal.Positivo, 2, 1));
 
 				double result = 0;
 
-				Dictionary<char?, int?> mapa = new Dictionary<char?, int?>();
+				var mapa = new Dictionary<char, int>();
 
 				mapa['X'] = 1;
 				result = pol.calcular(mapa);
@@ -156,7 +147,7 @@ namespace Teste
 		{
 			try
 			{
-				Dictionary<char?, int?> mapa = new Dictionary<char?, int?>();
+				var mapa = new Dictionary<char, int>();
 
 				Polinomio pol = Polinomio.criarPolinomio("2x^2-2");
 
@@ -249,7 +240,7 @@ namespace Teste
 		{
 			try
 			{
-				Dictionary<char?, int?> mapa = new Dictionary<char?, int?>();
+				var mapa = new Dictionary<char, int>();
 
 				Polinomio pol = Polinomio.criarPolinomio("2x^2-2");
 
