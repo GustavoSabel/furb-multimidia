@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{712D9741-58B8-4620-8F24-C6842B436FD5}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ValidadorPolinomios</RootNamespace>
+    <AssemblyName>ValidadorPolinomios</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="Analisador\AnalysisError.cs" />
+    <Compile Include="Analisador\Constants.cs" />
+    <Compile Include="Analisador\LexicalError.cs" />
+    <Compile Include="Analisador\Lexico.cs" />
+    <Compile Include="Analisador\ParserConstants.cs" />
+    <Compile Include="Analisador\ScannerConstants.cs" />
+    <Compile Include="Analisador\SemanticError.cs" />
+    <Compile Include="Analisador\Semantico.cs" />
+    <Compile Include="Analisador\SemanticoDummy.cs" />
+    <Compile Include="Analisador\Sintatico.cs" />
+    <Compile Include="Analisador\SyntaticError.cs" />
+    <Compile Include="Analisador\Token.cs" />
+    <Compile Include="Polinomio\Base.cs" />
+    <Compile Include="Polinomio\Elemento.cs" />
+    <Compile Include="Polinomio\Expressao.cs" />
+    <Compile Include="Polinomio\HashMapHelperClass.cs" />
+    <Compile Include="Polinomio\Polinomio.cs" />
+    <Compile Include="Polinomio\Sinal.cs" />
+    <Compile Include="Polinomio\Termo.cs" />
+    <Compile Include="Teste\Testes.cs" />
+    <Compile Include="View\Comparador.cs" />
+  </ItemGroup>
+</Project>
